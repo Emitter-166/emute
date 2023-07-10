@@ -61,7 +61,7 @@ export const listen = (client: Client, sequelize: Sequelize) => {
                     })
 
                     if (created) {
-                        if (await giveRole(userId, roleId, client, Number(args[2]))) {} else {
+                        if (await giveRole(userId, roleId, client, Number(args[1]))) {} else {
                             wrongUsage(`Unable to give role to ${userId}`, msg);
                             await model.destroy();
                         }
