@@ -38,7 +38,7 @@ export const listen = (client: Client, sequelize: Sequelize) => {
 
                 const roleId = `1126146395083116714`;
 
-                let time = Number(args[1]);
+                let time = convertToMilliseconds(args[1]);
 
                 if (Number.isNaN(time)) {
                     wrongUsage('time must be a number', msg);
@@ -95,6 +95,23 @@ export const wrongUsage = async (issue: string, msg: Message) => {
         console.log(err);
     }
 }
+
+function convertToMilliseconds(timeString: string): number {
+    const timeValue = parseInt(timeString);
+    if (isNaN(timeValue)) {
+      return NaN;
+    }
+  
+    if (timeString.endsWith('m')) {
+      return timeValue * 60 * 1000; // Convert minutes to milliseconds
+    } else if (timeString.endsWith('hr')) {
+      return timeValue * 60 * 60 * 1000; // Convert hours to milliseconds
+    } else if (timeString.endsWith('d')) {
+      return timeValue * 24 * 60 * 60 * 1000; // Convert days to milliseconds
+    } else {
+      return NaN; // Invalid input
+    }
+  }
 
 export const success = async (msg: Message) => {
     try {
